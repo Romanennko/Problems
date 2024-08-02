@@ -4,15 +4,24 @@ def longestCommonPrefix(self, strs):
   for i in strs:
     if maxy > len(i):
       maxy = len(i)
+   
+  characterCounter = 0
 
   for i in range(maxy):
     char = strs[0][i]
-    count = 0
+    characterCounter += 1
+    matchCounter = 0
+    
     for j in strs:
       if char == j[i]:
-        count += 1
-      if count == len(strs):
+        matchCounter += 1
+      
+      if matchCounter == len(strs):
         result.append(char)
-        count = 0
+        matchCounter = 0
+     
+    if characterCounter != len(result):
+      break
+
   result = "".join(result)
   return result
