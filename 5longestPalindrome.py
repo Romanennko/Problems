@@ -1,4 +1,4 @@
-def longestPalindrome(self, s: str) -> str:
+def longestPalindrome(s: str) -> str:
   resultList = []
   resultList.append(s[0])
   
