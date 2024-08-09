@@ -15,7 +15,3 @@ class Solution:
                         break
 
         return countValidWords
-
-
-asd = Solution()
-print(asd.countValidWords("q-,"))
