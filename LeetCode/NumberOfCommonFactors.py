@@ -8,7 +8,3 @@ class Solution:
             i += 1
 
         return len(commonFactors)
-
-
-asd = Solution()
-print(asd.commonFactors(885, 885))
