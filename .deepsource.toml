@@ -1,6 +1,9 @@
 version = 1
 
 [[analyzers]]
+name = "cxx"
+
+[[analyzers]]
 name = "rust"
 
   [analyzers.meta]
@@ -14,3 +17,6 @@ name = "python"
 
 [[analyzers]]
 name = "csharp"
+
+[[transformers]]
+name = "clang-format"
