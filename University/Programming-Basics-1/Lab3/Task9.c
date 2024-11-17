@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int contains_abba(char input[]) {
+int contains_abba(const char input[]) {
     for (int i = 0; i <= 6; i++) {
         if (input[i] == 'a' && input[i+1] == 'b' && input[i+2] == 'b' && input[i+3] == 'a') {
             return 1;
