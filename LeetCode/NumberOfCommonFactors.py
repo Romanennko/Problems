@@ -1,5 +1,6 @@
 class Solution:
-    def commonFactors(self, a: int, b: int) -> int:
+    @staticmethod
+    def commonFactors(a: int, b: int) -> int:
         commonFactors = []
         i = 1
         while a >= i or b >= i:
