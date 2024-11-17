@@ -15,15 +15,6 @@ public class Solution
         string reDigits = String.Join("", reDigitsList);
         string xStr = Convert.ToString(x);
 
-        if (reDigits == xStr)
-        {
-            return true;
-        }
-
-        else
-        {
-            return false;
-
-        }
+        return reDigits == xStr;
     }
 }
