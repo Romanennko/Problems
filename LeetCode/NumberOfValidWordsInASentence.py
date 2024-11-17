@@ -1,5 +1,6 @@
 class Solution:
-    def countValidWords(self, sentence: str) -> int:
+    @staticmethod
+    def countValidWords(sentence: str) -> int:
         words = sentence.split()
         countValidWords = len(words)
         punctuationMarks = ["!", ",", "."]
