@@ -1,6 +1,5 @@
 def longestPalindrome(s: str) -> str:
-  resultList = []
-  resultList.append(s[0])
+  resultList = [s[0]]
   
   for startIndex, i in enumerate(s):
     for endIndex, j in enumerate(s):
