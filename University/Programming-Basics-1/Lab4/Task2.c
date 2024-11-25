@@ -4,58 +4,53 @@
 
 #define N 30
 
-
 void fill_table_with_random_numbers(int *tab, int rozmiar);
 
 void print_table(int *tab, int n);
 
 double average_table(int *tab, int n);
 
+int main() {
+  int table[N];
 
-int main()
-{
-    int table[N];
+  fill_table_with_random_numbers(table, N);
+  print_table(table, N);
 
-    fill_table_with_random_numbers(table, N);
-    print_table(table, N);
+  double average = average_table(table, N);
+  printf("\nAverage: %.5f\n", average);
 
-    double average = average_table(table, N);
-    printf("\nAverage: %.5f\n", average);
-
-    return 0;
+  return 0;
 }
-
 
 void fill_table_with_random_numbers(int *tab, int rozmiar) {
-    srand(time(NULL));
+  srand(time(NULL));
 
-    int i;
-    for (i = 0; i < rozmiar; i++)
-        tab[i] = -100 + rand()%201;
+  int i;
+  for (i = 0; i < rozmiar; i++)
+    tab[i] = -100 + rand() % 201;
 
-    return;
+  return;
 }
 
-
 void print_table(int *tab, int n) {
-    int i;
+  int i;
 
-    printf("Array: ");
-    for (i = 0; i < n; i++)
-        printf("%d ", tab[i]);
-    printf("\n");
+  printf("Array: ");
+  for (i = 0; i < n; i++)
+    printf("%d ", tab[i]);
+  printf("\n");
 
-    return;
+  return;
 }
 
 double average_table(int *tab, int n) {
-    double sum = 0, average;
+  double sum = 0, average;
 
-    int i;
-    for (i = 0; i < n; i++)
-        sum += tab[i];
+  int i;
+  for (i = 0; i < n; i++)
+    sum += tab[i];
 
-    average = sum / n;
+  average = sum / n;
 
-    return average;
+  return average;
 }
