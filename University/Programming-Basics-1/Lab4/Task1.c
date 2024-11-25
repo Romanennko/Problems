@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-enum tab {one, two, three, dublicate1 = 10, dublicate2 = 10, custom1 = 20, custom2, custom3};
+enum tab {one, two, three, dublicate1 = 10, dublicate2 = 10, custom1, custom2, custom3};
 
 void printArray() {
     printf("one: %d\n", one);
