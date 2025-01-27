@@ -1,48 +1,50 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#define MAX_WORD 100
-#define NUM_WORDS 10
+#define MAX_CHARS 100
+#define MAX_WORDS 10
 
-void inputWords(char array[NUM_WORDS][MAX_WORD]);
-void printWords(char array[NUM_WORDS][MAX_WORD]);
-void findLongestWord(char array[NUM_WORDS][MAX_WORD], char longest[MAX_WORD]);
+void input_words(char words[MAX_WORDS][MAX_CHARS]);
+void print_words(char words[MAX_WORDS][MAX_CHARS]);
+void find_longest_word(char words[MAX_WORDS][MAX_CHARS], char longest_word[MAX_CHARS]);
 
 int main() {
-    char array[NUM_WORDS][MAX_WORD];
-    char longest[MAX_WORD] = "";
+    char words[MAX_WORDS][MAX_CHARS];
 
-    inputWords(array);
-    printWords(array);
-    findLongestWord(array, longest);
+    input_words(words);
+    puts("\nWords entered:");
+    print_words(words);
 
-    printf("\nLongest word: %s\n", longest);
+    char longest_word[MAX_CHARS];
+    find_longest_word(words, longest_word);
 
     return 0;
 }
 
 
-void inputWords(char array[NUM_WORDS][MAX_WORD]) {
-    printf("Enter 10 words:\n");
-    for (int i = 0; i < NUM_WORDS; i++) {
+void input_words(char words[MAX_WORDS][MAX_CHARS]) {
+    int i;
+    printf("Enter %d words:\n", MAX_WORDS);
+    for ( i = 0; i < MAX_WORDS; i++) {
         printf("Word %d: ", i + 1);
-        scanf("%s", array[i]);
+        scanf("%s", words[i]);
     }
 }
 
-
-void printWords(char array[NUM_WORDS][MAX_WORD]) {
-    printf("\nEntered words:\n");
-    for (int i = 0; i < NUM_WORDS; i++) {
-        printf("%s\n", array[i]);
+void print_words(char words[MAX_WORDS][MAX_CHARS]) {
+    int i, j;
+    for (i = 0; i < MAX_WORDS; i++) {
+        printf("Word %d: %s\n", i + 1, words[i]);
     }
 }
 
-
-void findLongestWord(char array[NUM_WORDS][MAX_WORD], char longest[MAX_WORD]) {
-    for (int i = 0; i < NUM_WORDS; i++) {
-        if (strlen(array[i]) > strlen(longest)) {
-            strcpy(longest, array[i]);
+void find_longest_word(char words[MAX_WORDS][MAX_CHARS], char longest_word[MAX_CHARS]) {
+    int i;
+    for (i = 0; i < MAX_WORDS; i++) {
+        if (strlen(words[i]) > strlen(longest_word)) {
+            strcpy(longest_word, words[i]);
         }
     }
+    printf("\nThe longest word is: %s\n", longest_word);
 }
