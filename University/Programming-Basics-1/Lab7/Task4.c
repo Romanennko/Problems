@@ -2,66 +2,82 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define MIN_RANDOM_NUMBER -20
+#define MAX_RANDOM_NUMBER 20
+
 #define ROWS 4
-#define COLUMNS 4
-#define RANDOM_MIN -20
-#define RANDOM_MAX 20
+#define COLS 4
 
-void fill_matrix(int matrix[ROWS][COLUMNS]);
-void print_matrix(int matrix[ROWS][COLUMNS]);
-void sum_of_rows_and_columns_matrix(int matrix[ROWS][COLUMNS]);
+void fill_matrix_random_numbers(int matrix[ROWS][COLS]);
+void sum_rows_elements(int matrix[ROWS][COLS]);
+void sum_cols_elements(int matrix[ROWS][COLS]);
+void print_matrix(int matrix[ROWS][COLS]);
 
-int main()
-{
-    int matrixA[ROWS][COLUMNS];
+int main() {
+    int matrix[ROWS][COLS];
 
-    fill_matrix(matrixA);
+    fill_matrix_random_numbers(matrix);
+    print_matrix(matrix);
 
-    printf("Matrix A:\n");
-    print_matrix(matrixA);
-    puts("");
-
-    sum_of_rows_and_columns_matrix(matrixA);
-
+    sum_rows_elements(matrix);
+    sum_cols_elements(matrix);
+    
     return 0;
 }
 
 
-void fill_matrix(int matrix[ROWS][COLUMNS])
-{
-    srand(time(0));
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            matrix[i][j] = RANDOM_MIN + rand() % (RANDOM_MAX - RANDOM_MIN + 1);
+void fill_matrix_random_numbers(int matrix[ROWS][COLS]) {
+    srand(time(NULL));
+    int i, j;
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            matrix[i][j] = MIN_RANDOM_NUMBER + rand() % (MAX_RANDOM_NUMBER - MIN_RANDOM_NUMBER + 1);
         }
     }
 }
 
+void sum_rows_elements(int matrix[ROWS][COLS]) {
+    int i, j, sum;
+    int array_sum[ROWS];
 
-void print_matrix(int matrix[ROWS][COLUMNS])
-{
-    printf("[\n");
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            printf("%4d", matrix[i][j]);
+    for (i = 0; i < ROWS; i++) {
+        sum = 0;
+        for (j = 0; j < COLS; j++) {
+            sum += matrix[i][j];
         }
-        puts("");
+        array_sum[i] = sum;
     }
-    printf("]\n");
+
+    printf("\nSum of rows elements:\n");
+    for (i = 0; i < ROWS; i++) {
+        printf("Row %d: %d\n", i + 1, array_sum[i]);
+    }
 }
 
+void sum_cols_elements(int matrix[ROWS][COLS]) {
+    int i, j, sum;
+    int array_sum[COLS];
 
-void sum_of_rows_and_columns_matrix(int matrix[ROWS][COLUMNS])
-{
-    for (int i = 0; i < ROWS; i++) {
-        int sum_of_row_elements = 0;
-        int sum_of_column_elements = 0;
-
-        for (int j = 0; j < COLUMNS; j++) {
-            sum_of_row_elements += matrix[i][j];
-            sum_of_column_elements += matrix[j][i];
+    for (j = 0; j < COLS; j++) {
+        sum = 0;
+        for (i = 0; i < ROWS; i++) {
+            sum += matrix[i][j];
         }
+        array_sum[j] = sum;
+    }
 
-        printf("Sum of row %d = %4d    Sum of column %d = %4d\n", i + 1, sum_of_row_elements, i + 1, sum_of_column_elements);
+    printf("\nSum of columns elements:\n");
+    for (j = 0; j < COLS; j++) {
+        printf("Column %d: %d\n", j + 1, array_sum[j]);
+    }
+}
+
+void print_matrix(int matrix[ROWS][COLS]) {
+    int i, j;
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            printf("%3d ", matrix[i][j]);
+        }
+        printf("\n");
     }
 }
