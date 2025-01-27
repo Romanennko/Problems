@@ -28,6 +28,7 @@ int main() {
 }
 
 void fill_the_matrix_random_numbers(double matrix[ROWS][COLS]) {
+    srand(time(NULL));
     int i, j;
     for(i = 0; i < ROWS; i++) {
         for(j = 0; j < COLS; j++) {
