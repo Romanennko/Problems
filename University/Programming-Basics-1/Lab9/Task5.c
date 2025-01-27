@@ -12,6 +12,39 @@ struct Person {
     float weight;
 };
 
+void addPerson();
+void readPeople();
+
+int main() {
+    int choice;
+
+    do {
+        printf("\nPeople Database Menu:\n");
+        printf("1. Add new person\n");
+        printf("2. View all people\n");
+        printf("3. Exit\n");
+        printf("Enter your choice (1-3): ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addPerson();
+                break;
+            case 2:
+                readPeople();
+                break;
+            case 3:
+                printf("Goodbye!\n");
+                break;
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    } while (choice != 3);
+
+    return 0;
+}
+
+
 void addPerson() {
     struct Person person;
     FILE *file = fopen("people.txt", "a");
@@ -65,33 +98,4 @@ void readPeople() {
 
     printf("----------------------------------------\n");
     fclose(file);
-}
-
-int main() {
-    int choice;
-
-    do {
-        printf("\nPeople Database Menu:\n");
-        printf("1. Add new person\n");
-        printf("2. View all people\n");
-        printf("3. Exit\n");
-        printf("Enter your choice (1-3): ");
-        scanf("%d", &choice);
-
-        switch (choice) {
-            case 1:
-                addPerson();
-                break;
-            case 2:
-                readPeople();
-                break;
-            case 3:
-                printf("Goodbye!\n");
-                break;
-            default:
-                printf("Invalid choice! Please try again.\n");
-        }
-    } while (choice != 3);
-
-    return 0;
 }
