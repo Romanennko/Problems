@@ -2,62 +2,57 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define MIN_RANDOM_NUMBER -11
+#define MAX_RANDOM_NUMBER 11
+
 #define ROWS 4
-#define COLUMNS 3
+#define COLS 3
 
-void fill_matrix_a_random_number(double matrix[ROWS][COLUMNS]);
-void multiplication(double matrix[ROWS][COLUMNS], double user_num);
-void print_the_matrix(double matrix[ROWS][COLUMNS]);
+void fill_the_matrix_random_numbers(double matrix[ROWS][COLS]);
+void multiply_the_matrix_by_number(double matrix[ROWS][COLS], double user_num);
+void print_the_matrix(double matrix[ROWS][COLS]);
 
-int main()
-{
-    double matrix[ROWS][COLUMNS];
+int main() {
+    double matrix[ROWS][COLS];
+
+    fill_the_matrix_random_numbers(matrix);
+    print_the_matrix(matrix);
+
     double user_num;
 
-    fill_matrix_a_random_number(matrix);
+    printf("Enter a number: ");
+    scanf("%lf", &user_num);
 
-    printf("Enter the number to multiply the matrix: ");
-    if (scanf("%lf", &user_num) != 1) {
-        printf("Invalid input. Exiting program.\n");
-        return 1;
+    multiply_the_matrix_by_number(matrix, user_num);
+    print_the_matrix(matrix);
+}
+
+void fill_the_matrix_random_numbers(double matrix[ROWS][COLS]) {
+    int i, j;
+    for(i = 0; i < ROWS; i++) {
+        for(j = 0; j < COLS; j++) {
+            matrix[i][j] = MIN_RANDOM_NUMBER + (double) rand() / RAND_MAX * (MAX_RANDOM_NUMBER - MIN_RANDOM_NUMBER);
+        }
     }
-
-    printf("Your number = %.2lf\n\n", user_num);
-
-    puts("Starting matrix: ");
-    print_the_matrix(matrix);
-    puts("");
-
-    printf("Starting matrix * %.2lf: \n", user_num);
-    multiplication(matrix, user_num);
-    print_the_matrix(matrix);
-
-    return 0;
 }
 
 
-void fill_matrix_a_random_number(double matrix[ROWS][COLUMNS]) {
-    srand(time(0));
-
-    double max = 11.0, min = -11.0;
-
-    for (int i = 0; i < ROWS; i++)
-        for (int j = 0; j < COLUMNS; j++)
-            matrix[i][j] = min + (double) rand() / RAND_MAX * (max - min);
-}
-
-
-void multiplication(double matrix[ROWS][COLUMNS], double user_num) {
-    for (int i = 0; i < ROWS; i++)
-        for (int j = 0; j < COLUMNS; j++)
+void multiply_the_matrix_by_number(double matrix[ROWS][COLS], double user_num) {
+    int i, j;
+    for(i = 0; i < ROWS; i++) {
+        for(j = 0; j < COLS; j++) {
             matrix[i][j] *= user_num;
+        }
+    }
 }
 
 
-void print_the_matrix(double matrix[ROWS][COLUMNS]) {
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++)
-            printf("%.2lf    ", matrix[i][j]);
-        puts("");
+void print_the_matrix(double matrix[ROWS][COLS]) {
+    int i, j;
+    for(i = 0; i < ROWS; i++) {
+        for(j = 0; j < COLS; j++) {
+            printf("%lf ", matrix[i][j]);
+        }
+        printf("\n");
     }
 }
