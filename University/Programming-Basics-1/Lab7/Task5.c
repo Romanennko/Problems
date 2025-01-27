@@ -2,62 +2,57 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define MIN_RANDOM_NUMBER 6
+#define MAX_RANDOM_NUMBER 25
+
 #define ROWS 5
-#define COLUMNS 5
-#define RANDOM_MIN 6
-#define RANDOM_MAX 25
+#define COLS 5
 
-void fill_matrix(int matrix[ROWS][COLUMNS]);
-void print_matrix(int matrix[ROWS][COLUMNS]);
-int calculate_diagonal_difference(int matrix[ROWS][COLUMNS]);
+void fill_matrix_random_numbers(int matrix[ROWS][COLS]);
+int calculate_difference_diagonals(int matrix[ROWS][COLS]);
+void print_matrix(int matrix[ROWS][COLS]);
 
-int main()
-{
-    int matrix[ROWS][COLUMNS];
+int main() {
+    int matrix[ROWS][COLS];
 
-    fill_matrix(matrix);
-
-    printf("Matrix:\n");
+    fill_matrix_random_numbers(matrix);
     print_matrix(matrix);
 
-    int difference = calculate_diagonal_difference(matrix);
-    printf("\nDifference between the sums of main and anti-diagonal: %d\n", difference);
-
+    int difference = calculate_difference_diagonals(matrix);
+    printf("\nDifference between the sum of the elements of the main diagonal and the sum of the elements of the secondary diagonal: %d\n", difference);
+    
     return 0;
 }
 
 
-void fill_matrix(int matrix[ROWS][COLUMNS])
-{
-    srand(time(0));
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            matrix[i][j] = RANDOM_MIN + rand() % (RANDOM_MAX - RANDOM_MIN + 1);
+void fill_matrix_random_numbers(int matrix[ROWS][COLS]) {
+    srand(time(NULL));
+    int i, j;
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            matrix[i][j] = MIN_RANDOM_NUMBER + rand() % (MAX_RANDOM_NUMBER - MIN_RANDOM_NUMBER + 1);
         }
     }
 }
 
+int calculate_difference_diagonals(int matrix[ROWS][COLS]) {
+    int sum_diagonal = 0, sum_anti_diagonal = 0;
 
-void print_matrix(int matrix[ROWS][COLUMNS])
-{
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            printf("%4d", matrix[i][j]);
+    int i;
+    for (i = 0; i < ROWS; i++) {
+        sum_diagonal += matrix[i][i];
+        sum_anti_diagonal += matrix[i][ROWS - i - 1];
+    }
+
+    return sum_diagonal - sum_anti_diagonal;
+}
+
+void print_matrix(int matrix[ROWS][COLS]) {
+    int i, j;
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            printf("%3d ", matrix[i][j]);
         }
         printf("\n");
     }
-}
-
-
-int calculate_diagonal_difference(int matrix[ROWS][COLUMNS])
-{
-    int sum_main_diagonal = 0;
-    int sum_anti_diagonal = 0;
-
-    for (int i = 0; i < ROWS; i++) {
-        sum_main_diagonal += matrix[i][i];
-        sum_anti_diagonal += matrix[i][ROWS - 1 - i];
-    }
-
-    return sum_main_diagonal - sum_anti_diagonal;
 }
