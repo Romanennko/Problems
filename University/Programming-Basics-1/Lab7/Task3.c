@@ -2,114 +2,74 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define MIN_RANDOM_NUMBER -10
+#define MAX_RANDOM_NUMBER 10
+
 #define ROWS 4
-#define COLUMNS 4
-#define RANDOM_MIN -10
-#define RANDOM_MAX 10
+#define COLS 4
 
-void fill_matrix(int matrix[ROWS][COLUMNS]);
-void print_matrix(int matrix[ROWS][COLUMNS]);
-void fill_table(int *table, int matrix[ROWS][COLUMNS]);
-void print_table(int *table, int size);
-void selection_sort_table(int *array, int size);
-void swap(int *first, int *second);
-void fill_sorted_matrix(int *table, int matrix[ROWS][COLUMNS]);
+void fill_matrix_random_numbers(int matrix[ROWS][COLS]);
+void sort_matrix(int matrix[ROWS][COLS]);
+void print_matrix(int matrix[ROWS][COLS]);
 
-int main()
-{
-    int matrixA[ROWS][COLUMNS];
-    int tableA[ROWS * COLUMNS];
+int main() {
+    int matrix[ROWS][COLS];
 
-    fill_matrix(matrixA);
-    printf("Matrix A before sorting:\n");
-    print_matrix(matrixA);
-    puts("");
+    fill_matrix_random_numbers(matrix);
+    printf("Original matrix:\n");
+    print_matrix(matrix);
 
-    fill_table(tableA, matrixA);
-
-    selection_sort_table(tableA, ROWS * COLUMNS);
-
-    fill_sorted_matrix(tableA, matrixA);
-    printf("Matrix A after sorting elements:\n");
-    print_matrix(matrixA);
-    puts("");
-
+    sort_matrix(matrix);
+    printf("\nSorted matrix:\n");
+    print_matrix(matrix);
+    
     return 0;
 }
 
 
-void fill_matrix(int matrix[ROWS][COLUMNS])
-{
-    srand(time(0));
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            matrix[i][j] = RANDOM_MIN + rand() % (RANDOM_MAX - RANDOM_MIN + 1);
+void fill_matrix_random_numbers(int matrix[ROWS][COLS]) {
+    srand(time(NULL));
+    int i, j;
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            matrix[i][j] = MIN_RANDOM_NUMBER + rand() % (MAX_RANDOM_NUMBER - MIN_RANDOM_NUMBER + 1);
         }
     }
 }
 
-
-void print_matrix(int matrix[ROWS][COLUMNS])
-{
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            printf("%4d", matrix[i][j]);
-        }
-        puts("");
-    }
-}
-
-
-void fill_table(int *table, int matrix[ROWS][COLUMNS])
-{
-    int index = 0;
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            table[index++] = matrix[i][j];
+void sort_matrix(int matrix[ROWS][COLS]) {
+    int temp_array[ROWS * COLS];
+    int i, j, temp;
+    
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            temp_array[i * COLS + j] = matrix[i][j];
         }
     }
-}
 
-
-void fill_sorted_matrix(int *table, int matrix[ROWS][COLUMNS])
-{
-    int index = 0;
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            matrix[i][j] = table[index++];
-        }
-    }
-}
-
-
-void print_table(int *table, int size)
-{
-    for (int i = 0; i < size; i++) {
-        printf("%4d", table[i]);
-    }
-    puts("");
-}
-
-
-void swap(int *first, int *second)
-{
-    int temp = *first;
-    *first = *second;
-    *second = temp;
-}
-
-
-void selection_sort_table(int *array, int size)
-{
-    for (int i = 0; i < size - 1; i++) {
-        int min_index = i;
-        for (int j = i + 1; j < size; j++) {
-            if (array[j] < array[min_index]) {
-                min_index = j;
+    for (i = 0; i < ROWS * COLS - 1; i++) {
+        for (j = 0; j < ROWS * COLS -1; j++) {
+            if (temp_array[j] > temp_array[j + 1]) {
+                temp = temp_array[j];
+                temp_array[j] = temp_array[j + 1];
+                temp_array[j + 1] = temp;
             }
         }
-        if (min_index != i) {
-            swap(&array[min_index], &array[i]);
+    }
+
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            matrix[i][j] = temp_array[i * COLS + j];
         }
+    }
+}
+
+void print_matrix(int matrix[ROWS][COLS]) {
+    int i, j;
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            printf("%3d ", matrix[i][j]);
+        }
+        printf("\n");
     }
 }
