@@ -1,76 +1,88 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-struct complex {
+struct Complex {
     double real;
     double imag;
 };
 
-struct complex get_input(void);
-struct complex add(struct complex z1, struct complex z2);
-struct complex subtract(struct complex z1, struct complex z2);
-struct complex multiply(struct complex z1, struct complex z2);
-void display(const struct complex, int count);
+struct Complex add(struct Complex a, struct Complex b);
+struct Complex subtract(struct Complex a, struct Complex b);
+struct Complex multiply(struct Complex a, struct Complex b);
+struct Complex divide(struct Complex a, struct Complex b);
+void print_complex(struct Complex num);
 
-int main()
-{
-    struct complex z1, z2, z3, z4, z5;
-    z1 = get_input();
-    z2 = get_input();
-    printf("Complex numbers in algebraic form: \n");
-    display(z1, 1);
-    display(z2, 2);
-    printf("z3 = z1 + z2 in algebraic form: \n");
-    z3 = add(z1, z2);
-    display(z3, 3);
-    printf("z4 = z1 - z2 in algebraic form: \n");
-    z4 = subtract(z1, z2);
-    display(z4, 4);
-    printf("z5 = z1 * z2 in algebraic form: \n");
-    z5 = multiply(z1, z2);
-    display(z5, 5);
+int main() {
+    struct Complex num1, num2, result;
+
+    printf("Enter the first complex number (real imag): ");
+    scanf("%lf %lf", &num1.real, &num1.imag);
+
+    printf("Enter the second complex number (real imag): ");
+    scanf("%lf %lf", &num2.real, &num2.imag);
+
+    result = add(num1, num2);
+    printf("Addition: ");
+    print_complex(result);
+
+    result = subtract(num1, num2);
+    printf("Subtraction: ");
+    print_complex(result);
+
+    result = multiply(num1, num2);
+    printf("Multiplication: ");
+    print_complex(result);
+
+    result = divide(num1, num2);
+    printf("Division: ");
+    print_complex(result);
+
     return 0;
 }
 
-struct complex get_input(void)
-{
-    struct complex temp;
-    printf("Enter real part: ");
-    scanf("%lf", &temp.real);
-    printf("Enter imaginary part: ");
-    scanf("%lf", &temp.imag);
-    return temp;
+
+struct Complex add(struct Complex a, struct Complex b) {
+    struct Complex result;
+    result.real = a.real + b.real;
+    result.imag = a.imag + b.imag;
+
+    return result;
 }
 
-struct complex add(struct complex z1, struct complex z2)
-{
-    struct complex s;
-    s.real = z1.real + z2.real;
-    s.imag = z1.imag + z2.imag;
-    return s;
+struct Complex subtract(struct Complex a, struct Complex b) {
+    struct Complex result;
+    result.real = a.real - b.real;
+    result.imag = a.imag - b.imag;
+
+    return result;
 }
 
-struct complex subtract(struct complex z1, struct complex z2)
-{
-    struct complex s;
-    s.real = z1.real - z2.real;
-    s.imag = z1.imag - z2.imag;
-    return s;
+struct Complex multiply(struct Complex a, struct Complex b) {
+    struct Complex result;
+    result.real = a.real * b.real - a.imag * b.imag;
+    result.imag = a.real * b.imag + a.imag * b.real;
+    
+    return result;
 }
 
-struct complex multiply(struct complex z1, struct complex z2)
-{
-   struct complex s;
-   s.real = (z1.real * z2.real - z1.imag * z2.imag);
-   s.imag = (z1.real * z2.imag + z1.imag * z2.real);
-   return s;
+struct Complex divide(struct Complex a, struct Complex b) {
+    struct Complex result;
+    double denominator = b.real * b.real + b.imag * b.imag;
+
+    if (denominator == 0) {
+        printf("Error: Division by zero\n");
+        return (struct Complex) {0, 0};
+    }
+
+    result.real = (a.real * b.real + a.imag * b.imag) / denominator;
+    result.imag = (a.imag * b.real - a.real * b.imag) / denominator;
+
+    return result;
 }
 
-void display(const struct complex info, int count)
-{
-   if (info.imag > 0)
-      printf("z%d = %lf + %lfi \n", count, info.real, info.imag);
-   else
-      printf("z%d = %lf %lfi \n", count, info.real, info.imag);
-   return;
+void print_complex(struct Complex num) {
+    if (num.imag >= 0) {
+        printf("%.2f + %.2fi\n", num.real, num.imag);
+    } else {
+        printf("%.2f - %.2fi\n", num.real, -num.imag);
+    }
 }
