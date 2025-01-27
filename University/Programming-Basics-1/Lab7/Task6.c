@@ -2,60 +2,55 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define MIN_RANDOM_NUMBER 0
+#define MAX_RANDOM_NUMBER 15
+
 #define ROWS 5
-#define COLUMNS 5
-#define RANDOM_MIN 0
-#define RANDOM_MAX 15
+#define COLS 5
 
-void fill_matrix(int matrix[ROWS][COLUMNS]);
-void print_matrix(int matrix[ROWS][COLUMNS]);
-void swap_numbers_on_diagonal(int matrix[ROWS][COLUMNS]);
+void fill_matrix_random_numbers(int matrix[ROWS][COLS]);
+void swap_numbers_in_main_diagonal(int matrix[ROWS][COLS]);
+void print_matrix(int matrix[ROWS][COLS]);
 
-int main()
-{
-    int matrix[ROWS][COLUMNS];
+int main() {
+    int matrix[ROWS][COLS];
 
-    fill_matrix(matrix);
-
-    puts("Matrix:");
+    fill_matrix_random_numbers(matrix);
     print_matrix(matrix);
 
-    puts("\nMatrix before swap the numbers on diagonal:");
-    swap_numbers_on_diagonal(matrix);
+    swap_numbers_in_main_diagonal(matrix);
+    printf("\nMatrix after swapping numbers in the main diagonal:\n");
     print_matrix(matrix);
 
     return 0;
 }
 
 
-void fill_matrix(int matrix[ROWS][COLUMNS])
-{
-    srand(time(0));
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            matrix[i][j] = RANDOM_MIN + rand() % (RANDOM_MAX - RANDOM_MIN + 1);
+void fill_matrix_random_numbers(int matrix[ROWS][COLS]) {
+    srand(time(NULL));
+    int i, j;
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            matrix[i][j] = MIN_RANDOM_NUMBER + rand() % (MAX_RANDOM_NUMBER - MIN_RANDOM_NUMBER + 1);
         }
     }
 }
 
-
-void swap_numbers_on_diagonal(int matrix[ROWS][COLUMNS]) {
-    int i, j = ROWS;
-    for (i = 0; i < 3; i++) {
-        int temp = matrix[i][i];
-        matrix[i][i] = matrix[j - i - 1][j - i - 1];
-        matrix[j - i - 1][j - i - 1] = temp;
+void swap_numbers_in_main_diagonal(int matrix[ROWS][COLS]) {
+    int i, j, temp;
+    for (i = 0; i < ROWS / 2; i++) {
+        temp = matrix[i][i];
+        matrix[i][i] = matrix[ROWS - i - 1][COLS - i - 1];
+        matrix[ROWS - i - 1][COLS - i - 1] = temp;
     }
 }
 
-
-void print_matrix(int matrix[ROWS][COLUMNS])
-{
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            printf("%4d  ", matrix[i][j]);
+void print_matrix(int matrix[ROWS][COLS]) {
+    int i, j;
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            printf("%3d ", matrix[i][j]);
         }
         printf("\n");
     }
 }
-
